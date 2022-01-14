@@ -1,0 +1,37 @@
+<div class="row information">
+  <div class="col-md-3 information-avatar">
+    <%= image_tag("#{@user.avatar.picture_url}", alt: "avatar", class: "avatar rounded-circle img-fluid") %>
+  </div>
+  <div class="col-md-9 information-main">
+    <% if current_user.id == @user.id %>
+      <div class="profile-edit">
+        <%# <a class="edit-profile">Edit Profile</a> %>
+        <%= link_to 'Edit Profile', edit_user_registration_path %>
+      </div>
+    <% else %>
+      <% if current_user.following?(@user)  %>
+        <%= link_to 'Following', relationships_path(user_id: @user.id), method: :delete  %>
+      <% else %>
+        <%= link_to 'Follow', relationships_path(user_id: @user.id), method: :post  %>
+      <% end %>
+    <%end%>
+    <div class="profile-name">
+      <%= "#{@user.first_name} #{@user.last_name}" %>
+    </div>
+    <div class="profile-navigate">
+      <ul>
+        <li>
+          <%= "#{@photos.size} Photos" %>
+        </li>
+        <li>
+          <%= "#{@albums.size} Albums" %>
+        </li>
+        <li>
+          <%= "#{@followings.size} Followings" %>
+        </li>
+        <li>
+          <%= "#{@followers.size} Followers" %>
+        </ul>
+      </div>
+    </div>
+  </div>

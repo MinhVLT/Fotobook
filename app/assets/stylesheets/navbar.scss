@@ -1,0 +1,20 @@
+.navbar {
+  background-color: rgb(66, 103, 178);
+  .navbar-brand {
+    font-weight: bold;
+    
+  }
+
+  a {
+    color: white;
+    padding: 0px 10px;
+    &:hover {
+      text-decoration: none;
+      color: white;
+    }
+  }
+
+  img {
+    max-height: 30px;
+}
+}

@@ -1,0 +1,2 @@
+module Feeds::AlbumsHelper
+end

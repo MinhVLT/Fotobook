@@ -1,0 +1,54 @@
+<div class="col-md-6 feed-photo">
+  <div class="card">
+    <div class="row">
+      <div class="col photo-images">
+        <%= image_tag "#{photo.picture.picture_url}" %>
+      </div>
+      <div class="col">
+        <div class="p-0 d-flex flex-column justify-content-around" style="min-height: 200px">
+          <div class="card-body p-2">
+            <div class="card-info">
+              <div class="card-info__avatar">
+                <%= link_to user_path(photo.user) do  %>
+                  <%= image_tag "#{photo.user.avatar.picture_url}", class: "img-fluid avatar rounded-circle", alt: "avatar"  %>
+                </div>
+                <div class="card-info__name">
+                  <%= link_to "#{photo.user.short_name}", user_path(photo.user) %>
+                </div>
+              <% end %>
+            </div>
+            <% if current_user && current_user != photo.user %>
+              <div class="d-flex justify-content-center align-items-center h-100">
+                <% if current_user.following?(photo.user) %>
+                  <%= link_to 'Folowing', relationships_path(user_id: photo.user_id), method: :delete  %>
+                <% else %>
+                  <%= link_to 'Follow', relationships_path(user_id: photo.user_id), method: :post %>
+                <% end %>
+              </div>
+            <% elsif current_user && current_user == photo.user %>
+            <% else %>
+              <div class="d-flex justify-content-center align-items-center h-100">
+                <%= link_to 'Follow', relationships_path(user_id: photo.user_id), method: :post %>
+              </div>
+            <% end %>
+            <div class="card-title">
+              <h5><%= photo.title %></h5>
+            </div>
+            <div class="card-text">
+              <p><%= photo.description %></p>
+            </div>
+          </div>
+          <div class="card-footer__react__time p-2">
+            <div class="like-count">
+              <i class="fas fa-heart"></i>
+              <p>123</p>
+            </div>
+            <div class="date-time">
+              <p><%= photo.updated_at %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

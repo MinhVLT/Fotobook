@@ -1,0 +1,46 @@
+<div class="new-photo col">
+  <div class="row">
+    <h5 class="mt-4">New Photo</h5>
+    <hr class="w-100">
+  </div>
+  <div class="form-new-photo">
+    <%= form_with model: @photo do |form| %>
+      <div class="form-row">
+        <div class="form-group col-md-6 d-flex flex-column justify-content-between">
+          <div>
+            <%# <label for="">Title</label> %>
+            <%= form.label :title, "Title" %>
+            <%= form.text_field :title, class: 'form-control'%>
+          </div>
+          <div class="w-50">
+            <%# <label for="">Sharing mode</label> %>
+            <%= form.label :is_private, "Sharing mode" %>
+            <%= form.select :is_private, options_for_select([["Public", false], ["Private", true]], false), class: "form-control"%>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <%# <label for="">Description</label> %>
+          <%= form.label :description, "Description" %>
+          <%= form.text_area :description, size: "30x10", class: 'form-control'%>
+        </div>
+        <div class="col-md-2 mt-3">
+          <div class="photo-upload-border d-flex justify-content-center align-items-center">
+            <i class="fas fa-plus"></i>
+            <%= form.fields_for :picture_attributes do |f| %>
+              <%= f.file_field :picture_url, class: "photo-upload", id: "upload-button" %>
+              <%= f.hidden_field :pictureable_id, value: @photo.id %>
+              <%= f.hidden_field :pictureable_type, value: "Photo" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div>
+        <%= form.submit "Save", class:"btn btn-success mt-5" %>
+        <%# <button >Save</button> %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<%= javascript_pack_tag 'photos' %>

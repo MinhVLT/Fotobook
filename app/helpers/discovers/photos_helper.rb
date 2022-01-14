@@ -1,0 +1,2 @@
+module Discovers::PhotosHelper
+end

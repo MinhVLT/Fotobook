@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <%= link_to "Fotobook", root_path, class: "navbar-brand" %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control" type="search" placeholder="Search Photo/Album" aria-label="Search">
+      <%# <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> %>
+    </form>
+    <ul class="navbar-nav">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to profile_path do %>
+              <%= image_tag "#{current_user.avatar.picture_url}", class:"img-fluid rounded-circle" %>
+              <%= current_user.short_name %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to("Logout", destroy_user_session_path, method: :delete) %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", new_user_session_path %>
+          </li>
+        <% end %>
+    </ul>
+  </div>
+</nav>

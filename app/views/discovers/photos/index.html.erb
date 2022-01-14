@@ -1,0 +1,8 @@
+<%= render partial: 'shared/photo_album_nav', locals: {action_param: params[:action]} %>
+
+<div class="wrapper-feeds-photo row mt-4">
+  <% @photos.each do |photo| %>
+    <%= render partial: 'shared/post', locals: {photo: photo} %>
+  <% end %>
+</div>
+<%= paginate @photos %>

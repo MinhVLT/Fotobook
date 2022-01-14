@@ -1,0 +1,8 @@
+<ul class="nav nav-pills justify-content-center">
+  <li class="nav-item">
+    <%= link_to "Photo", {controller: "photos", action: action_param}, class:"nav-link #{'active' if ['discovers/photos', 'feeds/photos'].include?(params[:controller])}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to "Album", {controller: "albums", action: action_param}, class:"nav-link #{'active' if ['discovers/albums', 'feeds/albums'].include?(params[:controller])}" %>
+  </li>
+</ul>

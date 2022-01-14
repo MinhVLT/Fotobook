@@ -1,0 +1,2 @@
+module Feeds::PhotosHelper
+end
