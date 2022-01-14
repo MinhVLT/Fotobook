@@ -21,6 +21,22 @@ class PhotosController < ApplicationController
     end
   end
 
+  def edit
+    @photo = Photo.find(params[:id])
+  end
+
+  def update
+    @photo = Photo.find(params[:id])
+    @photo.valid?
+    puts @photo.errors.full_messages
+    
+    if @photo.update(photo_params)
+      redirect_to root_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
   def photo_params
     params.require(:photo).permit(:title, :description, :is_private, picture_attributes: [:pictureable_id, :pictureable_type, :picture_url])

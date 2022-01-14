@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # get "/discover/photos", to: "photos#discover" 
   # get "/discover/albums", to: "albums#discover" 
 
-  devise_for :users
+  devise_for :users, controllers: {registrations: 'registrations'}
   resources :users, only: [:show]
 
   resources :photos, :albums, only: [:new, :create, :edit, :update, :destroy]

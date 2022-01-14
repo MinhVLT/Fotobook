@@ -47,10 +47,10 @@
             <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
           </div>
           <div >
-            <%= f.fields_for :avatar_attributes do |f| %>
-              <%= f.hidden_field :picture_url, value: "#{resource.id}_default.jpg" %>
-              <%= f.hidden_field :pictureable_id, value: resource.id %>
-              <%= f.hidden_field :pictureable_type, value: "User" %>
+            <%= f.fields_for :avatar_attributes do |form| %>
+              <%= form.hidden_field :picture_url, value: "#{resource.id}_default.jpg" %>
+              <%= form.hidden_field :pictureable_id, value: resource.id %>
+              <%= form.hidden_field :pictureable_type, value: "User" %>
             <% end %>
           </div>
           <div class="actions">

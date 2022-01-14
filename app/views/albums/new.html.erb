@@ -27,7 +27,7 @@
           <div class="album-upload-border d-flex justify-content-center align-items-center">
             <i class="fas fa-plus"></i>
             <%= form.fields_for :pictures do |f| %>
-              <%= f.file_field :picture_url, class: "album-upload", id: "photo_url" %>
+              <%= f.file_field :picture_url, class: "album-upload", id: "picture_url" %>
               <%= f.hidden_field :pictureable_id, value: @album.id %>
               <%= f.hidden_field :pictureable_type, value: "Album" %>
             <% end %>
@@ -45,7 +45,7 @@
 <script>
   $(function() {
     // let imageUploadInAlbum = []
-    $('.new-album #photo_url').on('change', function() {
+    $('.new-album #picture_url').on('change', function() {
       // inputFiles = this
       // for(const file of inputFiles.files) {
       //   file.name = "1" + file.name
