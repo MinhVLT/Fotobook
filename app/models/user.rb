@@ -7,7 +7,7 @@ class User < ApplicationRecord
   after_commit :add_default_avatar, on:[:create]
 
   validates :first_name, :last_name, :email, presence: true
-  validates :password, presence: true, unless: Proc.new { |a| a.password.blank? } 
+  validates :password, presence: true, on: :create
   validates :first_name, length: { maximum: 25 }
   validates :last_name, length: { maximum: 25 }
   validates :email, length: { maximum: 255 }, uniqueness: true

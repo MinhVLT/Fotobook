@@ -18,6 +18,8 @@ gem 'rmagick'
 # Jquery validation
 gem "jquery-validation-rails"
 
+gem 'cocoon'
+
 gem 'omniauth-facebook'
 gem 'omniauth-rails_csrf_protection'
 

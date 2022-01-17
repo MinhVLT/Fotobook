@@ -1,0 +1,12 @@
+<div class="nested-fields">
+  <div class="field photo-upload-border d-flex justify-content-center align-items-center">
+    <% if params[:action] == 'edit' %>
+      <div class="field photo-upload-border d-flex justify-content-center align-items-center">
+        <%= image_tag "#{f.object.picture_url}", class:"existing-photos" %>
+      </div>
+    <% else %>
+      <i class="fas fa-plus"></i>
+    <% end %>
+    <%= f.file_field :picture_url, class:"photo-upload", id: "picture_url", onChange:"previewPhoto(this)" %>
+  </div>
+</div>

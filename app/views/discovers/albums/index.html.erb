@@ -1,7 +1,7 @@
 <%= render partial: 'shared/photo_album_nav', locals: {action_param: params[:action]} %>
 <div class="wrapper-feeds-album row mt-4">
   <div class="wrapper-feeds-album row mt-4">
-    <% @album.each do |album| %>
+    <% @albums.each do |album| %>
       <div class="col-md-6 feed-photo">
         <div class="card">
           <div class="row">
@@ -25,10 +25,10 @@
                       </div>
                     </div>
                     <div class="d-flex justify-content-center align-items-center h-100">
-                      <% if current_user.following?(photo.user) %>
-                        <%= link_to 'Folowing', relationships_path(user_id: photo.user_id), method: :delete  %>
+                      <% if current_user.following?(album.user) %>
+                        <%= link_to 'Folowing', relationships_path(user_id: album.user_id), method: :delete  %>
                       <% else %>
-                        <%= link_to 'Follow', relationships_path(user_id: photo.user_id), method: :post %>
+                        <%= link_to 'Follow', relationships_path(user_id: album.user_id), method: :post %>
                       <% end %>
                     </div>
                   </div>
@@ -56,4 +56,20 @@
     <% end %>
   </div>
 </div>
-<%= paginate @albums %>
+
+<script>
+        $('.profile-albums .albums .photo-image').each(function() {
+        let $this = $(this)
+        $this.children("img").each(function(index) {
+            if (index > 5) return
+            // console.log(`rotate(${index*20}deg)`)
+            if (index == 0) {
+                $(this).css('z-index','100')
+            }
+            if (index != 0)
+                $(this).css('transform' ,`rotate(${index*3}deg)`)
+            // console.log(this)
+        })
+
+    })
+</script>

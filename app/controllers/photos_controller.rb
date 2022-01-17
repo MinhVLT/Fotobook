@@ -1,6 +1,7 @@
 class PhotosController < ApplicationController
   
   before_action :authenticate_user!
+  before_action :find_photo, only: [:edit, :update, :destroy]
 
   def new
     @photo = current_user.photos.new
@@ -8,8 +9,8 @@ class PhotosController < ApplicationController
 
   def create
     @photo = current_user.photos.new(photo_params)
-    @photo.valid?
-    puts @photo.errors.full_messages
+    # @photo.valid?
+    # puts @photo.errors.full_messages
     
 
     if @photo.save
@@ -22,23 +23,42 @@ class PhotosController < ApplicationController
   end
 
   def edit
-    @photo = Photo.find(params[:id])
+
   end
 
   def update
-    @photo = Photo.find(params[:id])
-    @photo.valid?
-    puts @photo.errors.full_messages
-    
-    if @photo.update(photo_params)
-      redirect_to root_path
+    # @photo.valid?
+    # puts @photo.errors.full_messages
+    if @photo.picture && !@photo.picture.changed?
+      if @photo.update(photo_params_without_picture)
+        redirect_to root_path
+      else
+        render :edit, status: :unprocessable_entity
+      end
     else
-      render :edit, status: :unprocessable_entity
+      if @photo.update(photo_params)
+        redirect_to root_path
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
+  end
+
+  def destroy
+    @photo.destroy
+    redirect_to root_path
   end
 
   private
   def photo_params
     params.require(:photo).permit(:title, :description, :is_private, picture_attributes: [:pictureable_id, :pictureable_type, :picture_url])
+  end
+
+  def photo_params_without_picture
+    params.require(:photo).permit(:title, :description, :is_private)
+  end
+
+  def find_photo
+    @photo = Photo.find(params[:id])
   end
 end

@@ -1,40 +1,180 @@
-<div class="row information">
-  <div class="col-md-3 information-avatar">
-    <%= image_tag("#{@user.avatar.picture_url}", alt: "avatar", class: "avatar rounded-circle img-fluid") %>
-  </div>
-  <div class="col-md-9 information-main">
-    <% if current_user.id == @user.id %>
-      <div class="profile-edit">
-        <%# <a class="edit-profile">Edit Profile</a> %>
-        <%= link_to 'Edit Profile', edit_user_registration_path, class: "badge badge-pill badge-info" %>
-      </div>
-    <% else %>
-      <% if current_user.following?(@user)  %>
-        <%= link_to 'Following', relationships_path(user_id: @user.id), method: :delete, class: "badge badge-pill badge-primary"  %>
-      <% else %>
-        <%= link_to 'Follow', relationships_path(user_id: @user.id), method: :post, class: "badge badge-pill badge-primary"  %>
-      <% end %>
-    <%end%>
-    <div class="profile-name">
-      <%= "#{@user.first_name} #{@user.last_name}" %>
+<div class="profile col">
+  <div class="row information">
+    <div class="col information-avatar">
+      <%= image_tag("#{@user.avatar.picture_url}", alt: "avatar", class: "avatar rounded-circle img-fluid") %>
     </div>
-    <div class="profile-navigate">
-      <ul>
-        <li>
-          <%= "#{@photos.size} Photos" %>
-        </li>
-        <li>
-          <%= "#{@albums.size} Albums" %>
-        </li>
-        <li>
-          <%= "#{@followings.size} Followings" %>
-        </li>
-        <li>
-          <%= "#{@followers.size} Followers" %>
+    <div class="col-md-9 information-main">
+      <% if current_user.id == @user.id %>
+        <div class="profile-edit">
+          <%# <a class="edit-profile">Edit Profile</a> %>
+          <%= link_to 'Edit Profile', edit_user_registration_path, class: "badge badge-pill" %>
+        </div>
+      <% else %>
+        <% if current_user.following?(@user)  %>
+          <%= link_to 'Following', relationships_path(user_id: @user.id), method: :delete, class: "badge badge-pill badge-primary"  %>
+        <% else %>
+          <%= link_to 'Follow', relationships_path(user_id: @user.id), method: :post, class: "badge badge-pill badge-primary"  %>
+        <% end %>
+      <%end%>
+      <div class="profile-name">
+        <%= "#{@user.first_name} #{@user.last_name}" %>
+      </div>
+      <div class="profile-navigate">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="photos-tab" data-toggle="tab" href="#photos" role="tab" aria-controls="photos" aria-selected="true"><%= "#{@photos.size} PHOTOS" %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="albums-tab" data-toggle="tab" href="#albums" role="tab" aria-controls="albums" aria-selected="false"><%= "#{@albums.size} ALBUMS" %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="followings-tab" data-toggle="tab" href="#followings" role="tab" aria-controls="followings" aria-selected="false"><%= "#{@followings.size} Followings" %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="followers-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="followers" aria-selected="false"><%= "#{@followers.size} Followers" %></a>
+          </li>
         </ul>
       </div>
-      <% if @user.id == current_user.id%>
-        <%= link_to 'Add Photo', new_photo_path, class: "badge badge-pill badge-success" %>
-      <% end %>
     </div>
   </div>
+
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+      <div class="d-flex justify-content-end">
+        <% if @user.id == current_user.id%>
+          <%= link_to 'Add Photo', new_photo_path, class: "btn btn-success add-photo-button" %>
+        <% end %>
+      </div>
+      <div class="row profile-photos">
+        <% @photos.each do |photo| %>
+          <% if @user.following?(current_user) || @user.id == current_user.id || photo.is_private == false %>
+            <div class="col-md-3 photos">
+              <div class="photo-image h-100">
+                <%= image_tag "#{photo.picture.picture_url}", alt: "photo" %>
+                <% if photo.is_private %>
+                  <div class="circle-lock">
+                    <i class="fas fa-lock" class="img-fluid"></i>
+                  </div>
+                <% end %>
+                <%= link_to "EDIT", edit_photo_path(photo.id) ,  class: "edit-photo-text" %>
+              </div>
+              <div class="photo-title">
+                <p class="text-center">
+                  <%= photo.title %>
+                </p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="albums" role="tabpanel" aria-labelledby="albums-tab">
+      <div class="d-flex justify-content-end">
+        <% if @user.id == current_user.id%>
+          <%= link_to 'Add album', new_album_path, class: "btn btn-success add-photo-button" %>
+        <%end%>
+      </div>
+      <div class="row profile-albums">
+        <% @albums.each do |album| %>
+          <div class="col-md-3 albums">
+            <div class="photo-image col-md-12 pl-0">
+              <% album.pictures.each do |picture| %>
+                <%= image_tag "#{picture.picture_url}", alt: "photo", class: "img-fluid" %>
+              <% end %>
+              <% if album.is_private == true %>
+                <div class="circle-lock">
+                  <i class="fas fa-lock" class="img-fluid"></i>
+                </div>
+              <% end %>
+              <%= link_to "EDIT", edit_album_path(album.id) ,  class: "edit-photo-text" %>
+              <div class="count-photo">
+                <span><%= album.pictures.size %></span>
+                <span>PHOTOS</span>
+              </div>
+            </div>
+            <div class="album-title">
+              <p class="text-center"><%= album.title %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="followings" role="tabpanel" aria-labelledby="followings-tab">
+      <div class="row profile-followings mt-5">
+        <% @followings.each do |following| %>
+          <div class="col-md-3 followings mt-5">
+            <div class="card">
+              <%= image_tag "#{following.avatar.picture_url}", class: "card-img-top rounded-circle", alt: "" %>
+              <div class="card-body">
+                <h5 class="card-title text-center"><%= following.short_name %></h5>
+                <div class="data row">
+                  <div class="data-photo col-md-6 p-0 d-flex flex-column align-items-center">
+                    <span style="font-size: 24px; color: #3C5999; font-weight: bold;"><%= following.photos.size%></span> <span style="color:#3C5999">PHOTOS</span>
+                  </div>
+                  <div class="data-albums col-md-6 p-0 d-flex flex-column align-items-center">
+                    <span style="font-size: 24px; color: #3C5999; font-weight: bold;"><%= following.albums.size%></span> <span style="color:#3C5999">ALBUMS</span>
+                  </div>
+                </div>
+              </div>
+              <% if current_user.id != following.id %>
+                <% if current_user.following?(following)  %>
+                  <%= link_to 'UnFollow', relationships_path(user_id: following.id), method: :delete  %>
+                <% else %>
+                  <%= link_to 'Follow', relastionships_path(user_id: following.id), method: :post  %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="followers-tab">
+      <div class="row profile-followers mt-5">
+        <% @followers.each do |follower| %>
+          <div class="col-md-3 followings mt-5">
+            <div class="card">
+              <%= image_tag "#{follower.avatar.picture_url}" , alt: "", class: "card-img-top rounded-circle" %>
+              <div class="card-body">
+                <h5 class="card-title text-center"><%= follower.short_name %></h5>
+                <div class="data row">
+                  <div class="data-photo col-md-6 p-0 d-flex flex-column align-items-center">
+                    <span style="font-size: 24px; color: #3C5999; font-weight: bold;"><%= follower.photos.size%></span> <span style="color:#3C5999">PHOTOS</span>
+                  </div>
+                  <div class="data-albums col-md-6 p-0 d-flex flex-column align-items-center">
+                    <span style="font-size: 24px; color: #3C5999; font-weight: bold;"><%= follower.albums.size%></span> <span style="color:#3C5999">ALBUMS</span>
+                  </div>
+                </div>
+              </div>
+              <% if current_user.id != follower.id %>
+                <% if current_user.following?(follower)  %>
+                  <%= link_to 'UnFollow', relationships_path(user_id: follower.id), method: :delete  %>
+                <% else %>
+                  <%= link_to 'Follow', relastionships_path(user_id: follower.id), method: :post  %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('.profile-albums .albums .photo-image').each(function() {
+    let $this = $(this)
+    $this.children("img").each(function(index) {
+      if (index > 5) return
+      // console.log(`rotate(${index*20}deg)`)
+      if (index == 0) {
+        $(this).css('z-index','100')
+      }
+      if (index != 0)
+        $(this).css('transform' ,`rotate(${index*3}deg)`)
+    })
+  })
+</script>

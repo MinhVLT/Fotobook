@@ -5,21 +5,21 @@ class UsersController < ApplicationController
   def show
     if params[:id]
       @user = User.find(params[:id])
+      @photos = @user.photos.in_public.includes(:picture)
+      @albums = @user.albums.in_public.includes(:pictures)
+      @followings = @user.followings
+      @followers = @user.followers
     else
       @user = current_user
+      @photos = @user.photos.includes(:picture)
+      @albums = @user.albums.includes(:pictures)
+      @followings = @user.followings
+      @followers = @user.followers
     end
-    @photos = @user.photos
-    @albums = @user.albums
-    @followings = @user.followings
-    @followers = @user.followers
+    
     
   end
 
   
-
-  private
-  def get_user
-    @user = User.find(params[:id])
-  end
 
 end

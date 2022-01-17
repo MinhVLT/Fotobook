@@ -7,7 +7,7 @@
       </div>
       <div class="w-50">
         <%= form.label :is_private, "Sharing mode" %>
-        <%= form.select :is_private, options_for_select([["Public", false], ["Private", true]], false), class: "form-control"%>
+        <%= form.select :is_private, options_for_select([["Public", false], ["Private", true]], "#{false ? params[:action] == 'new' : photo.is_private}"), class: "form-control"%>
       </div>
     </div>
     <div class="form-group col-md-6">
@@ -31,5 +31,8 @@
   </div>
   <div>
     <%= form.submit "Save", class:"btn btn-success mt-5" %>
+    <% if params[:action] == 'edit' %>
+      <%= link_to "Delete", photo_path(photo), class:"btn btn-danger mt-5", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+    <% end %>
   </div>
 <% end %>

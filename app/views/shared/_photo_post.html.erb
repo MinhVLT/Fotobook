@@ -2,7 +2,7 @@
   <div class="card">
     <div class="row">
       <div class="col photo-images">
-        <%= image_tag "#{photo.picture.picture_url}" %>
+        <%= image_tag "#{photo.picture.picture_url}", onclick:"onClick(this)" %>
       </div>
       <div class="col">
         <div class="p-0 d-flex flex-column justify-content-around" style="min-height: 200px">

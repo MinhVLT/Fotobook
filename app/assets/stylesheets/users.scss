@@ -1,3 +1,241 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.profile {
+  background-color: #fff;
+  // height: 1000px;
+  margin-top: 1.5rem;
+  
+  .information {
+    .information-avatar {
+      max-width: fit-content;
+    }
+
+    .information-main {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    .profile-edit {
+      border-radius: 18px;
+      border: 2px solid #3C5999 ;
+      box-sizing: border-box;
+      width: fit-content;
+
+      a {
+        color: #3C5999;
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+
+    .profile-name {
+      font-size: 45px;
+      font-weight: bold;
+    }
+
+    .profile-navigate {
+      ul {
+        display: flex;
+        padding: 0;
+
+        li {
+          list-style-type: none;
+          padding-right: 5px;
+          
+          &:not(:last-child) {
+            border-right: 2px solid #828282
+          }
+          &:not(:first-child) {
+            padding-left: 5px
+          }
+
+          a {
+            color: #828282;
+            font-size: 24px;
+
+            &.active {
+              color: #3C5999;
+              font-weight: 700;
+            }
+
+            span {
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .profile-photos {
+
+
+    .photos {
+      margin-top: 2rem;
+      max-width: 250px;
+      max-height: 250px;
+      min-width: 150px;
+      min-height: 150px;
+
+      .photo-image {
+        position: relative;
+  
+        img {
+          border-radius: 6px;
+          width: 100%;
+          object-fit: cover;
+          height: 100%;
+        }
+  
+        .circle-lock {
+          position: absolute;
+          top: 1px;
+          right: 1px;
+          background-color: #fff;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+  
+        .edit-photo-text {
+          position: absolute;
+          bottom: 1px;
+          right: 1px;
+          color: white;
+          background-color: rgba(0, 0, 0, 0.25);
+          border-radius: 14px;
+          width: fit-content;
+  
+          a {
+            color: white;
+          }
+        }
+      }
+
+      .photo-title {
+        padding: 10px;
+        p {
+          font-size: 20px;
+          color: #828282;
+        }
+      }
+    }
+  }
+
+  .profile-albums {
+    // margin-top: 1rem;
+
+    .photo-image {
+      padding-bottom: 100%;
+      // overflow: hidden;
+      max-height: 100%;
+
+      img {
+        border-radius: 6px;
+        // max-width: 100%;
+        // max-height: 100%;
+        position: absolute;
+        padding: 20px;
+        object-fit: cover;
+        max-width: 250px;
+        max-height: 250px;
+        min-width: 200px;
+        min-height: 200px;
+      }
+
+      .circle-lock {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #fff;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index:100;
+      }
+
+      .count-photo {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        z-index: 100;
+        // padding: 15px;
+        width: 40%;
+        height: 40%;
+      
+        color: white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: bold;
+
+        span {
+          &:first-child {
+            font-size: 1.5rem;
+          }
+        }
+      }
+
+      .edit-photo-text {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.25);
+        border-radius: 14px;
+        width: fit-content;
+        z-index:100;
+      }
+    }    
+
+    .album-title {
+      padding-top: 10px;
+        p {
+          font-size: 20px;
+          color: #828282;
+        }
+    }
+  }
+
+}
+
+
+
+
+
+.profile-followings .card,.profile-followers .card {
+  padding: 0.5rem 1.2rem 0.5rem 1.2rem;
+  background-color: rgba(248, 248, 248, 1);
+}
+
+.profile-followings .card a,.profile-followers .card a {
+  background: 
+   linear-gradient(to right, #9c20aa,#fb3570) padding-box, 
+   linear-gradient(to right, #9c20aa, #fb3570) border-box;
+  color: #313149;
+  padding:1px 10px 1px 10px;
+  border: 2px solid transparent;
+  border-radius:15px;
+  display:inline-block;
+  /* margin: 75px 0; */
+  width: fit-content;
+  align-self: center;
+
+}
+
+
+.profile .add-photo-button {
+  border-radius: 29px;
+}
